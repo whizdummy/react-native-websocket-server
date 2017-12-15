@@ -1,0 +1,16 @@
+{
+  "name": "react-native-websocket-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "websocket",
+    "server"
+  ],
+  "author": "djfable02",
+  "license": "MIT"
+}

@@ -56,19 +56,6 @@ RCT_EXPORT_METHOD(start: (NSString *) ipAddress
 
 - (void)server:(PSWebSocketServer *)server webSocketDidOpen:(PSWebSocket *)webSocket {
     NSLog(@"Websocket serverDidOpen");
-    
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-    
-    [dictionary setObject:@"onOpen" forKey:@"type"];
-    [dictionary setObject:[NSString stringWithFormat:@"%@", [webSocket remoteHost]] forKey:@"origin"];
-    [dictionary setObject:[NSString stringWithFormat:@"%@ has joined the room", [webSocket remoteHost]] forKey:@"data"];
-    
-    NSError *error;
-    NSData *jsonObject = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&error];
-    
-    for (PSWebSocket *connection in [server getWebsocketConnections]) {
-        [connection send:[[NSString alloc] initWithData:jsonObject encoding:NSUTF8StringEncoding]];
-    }
 }
 - (void)server:(PSWebSocketServer *)server webSocket:(PSWebSocket *)webSocket didReceiveMessage:(id)message {
     NSMutableDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[message dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];

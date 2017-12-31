@@ -7,7 +7,7 @@
 //
 
 #import "RNWebsocketServer.h"
-#import "PSWebSocketServer.h"
+#import <PocketSocket/PSWebSocketServer.h>
 
 @interface RNWebsocketServer () <PSWebSocketServerDelegate>
 

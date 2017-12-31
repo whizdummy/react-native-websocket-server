@@ -66,7 +66,6 @@ RCT_EXPORT_METHOD(start: (NSString *) ipAddress
     NSData *jsonObject = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&error];
     
     for (PSWebSocket *connection in [server getWebsocketConnections]) {
-        NSLog(@"Websocket onmessage send: %@", [connection URLRequest]);
         [connection send:[[NSString alloc] initWithData:jsonObject encoding:NSUTF8StringEncoding]];
     }
 }

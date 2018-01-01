@@ -15,44 +15,39 @@ import java.net.InetSocketAddress;
  */
 
 public class WebServer extends WebSocketServer {
+    private static final String ON_OPEN             = "WS_ON_OPEN";
+    private static final String ON_CLOSE            = "WS_ON_CLOSE";
+    private static final String ON_MESSAGE          = "WS_ON_MESSAGE";
+    private static final String ON_ERROR            = "WS_ON_ERROR";
+    private static final String ON_START            = "WS_ON_START";
+    private static final String ON_ERROR_MESSAGE    = "WS_ON_ERROR_MESSAGE";
+
     public WebServer(InetSocketAddress inetSocketAddress) {
         super(inetSocketAddress);
     }
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        try {
-            String jsonString = (new JSONObject()).put("type", "onMessage")
-                    .put("data", conn.getRemoteSocketAddress().getHostName() + " entered the room")
-                    .toString();
-
-            broadcast(jsonString);
-        } catch (JSONException e) {
-            broadcast(e.getMessage());
-        }
+        Log.d(ON_OPEN, "Websocket onOpen");
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-        try {
-            String jsonString = (new JSONObject()).put("type", "onMessage")
-                    .put("data", conn.getRemoteSocketAddress().getHostName() + " has left the room")
-                    .toString();
-
-            broadcast(jsonString);
-        } catch (JSONException e) {
-            broadcast(e.getMessage());
-        }
+        Log.d(ON_CLOSE, "Websocket onClose");
     }
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        try {
-            String jsonString = (new JSONObject()).put("type", "onMessage")
-                    .put("data", conn.getRemoteSocketAddress().getHostName() + ": " + message)
-                    .toString();
+        Log.d(ON_MESSAGE, "Websocket onMessage");
 
-            broadcast(jsonString);
+        try {
+            // Parse passed message data to JSON object
+            JSONObject jsonObject = new JSONObject(message);
+
+            // Add origin (Who sent the message)
+            jsonObject.put("origin", conn.getRemoteSocketAddress().getHostName());
+
+            broadcast(jsonObject.toString());
         } catch (JSONException e) {
             broadcast(e.getMessage());
         }
@@ -60,28 +55,14 @@ public class WebServer extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-        try {
-            String jsonString = (new JSONObject()).put("type", "onError")
-                    .put("data", ex.getMessage())
-                    .toString();
+        Log.d(ON_ERROR, "Websocket onError");
 
-            broadcast(jsonString);
-        } catch (JSONException e) {
-            broadcast(e.getMessage());
-        }
+        Log.e(ON_ERROR_MESSAGE, ex.getMessage());
     }
 
     @Override
     public void onStart() {
-        try {
-            String jsonString = (new JSONObject()).put("type", "onStart")
-                    .put("data", "Websocket server now starting...")
-                    .toString();
-
-            broadcast(jsonString);
-        } catch (JSONException e) {
-            broadcast(e.getMessage());
-        }
+        Log.d(ON_START, "Websocket onStart");
     }
 }
 

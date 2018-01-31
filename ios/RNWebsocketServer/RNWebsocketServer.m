@@ -34,6 +34,11 @@ RCT_EXPORT_METHOD(start: (NSString *) ipAddress
     [self.server start];
 }
 
+RCT_EXPORT_METHOD(stop)
+{
+    [self.server start];
+}
+
 - (BOOL)server:(PSWebSocketServer *)server acceptWebSocketFrom:(NSData*)address withRequest:(NSURLRequest *)request trust:(SecTrustRef)trust response:(NSHTTPURLResponse **)response {
     NSLog(@"Websocket Request: %@", request);
 

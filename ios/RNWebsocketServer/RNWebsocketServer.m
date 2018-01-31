@@ -36,7 +36,7 @@ RCT_EXPORT_METHOD(start: (NSString *) ipAddress
 
 RCT_EXPORT_METHOD(stop)
 {
-    [self.server start];
+    [self.server stop];
 }
 
 - (BOOL)server:(PSWebSocketServer *)server acceptWebSocketFrom:(NSData*)address withRequest:(NSURLRequest *)request trust:(SecTrustRef)trust response:(NSHTTPURLResponse **)response {

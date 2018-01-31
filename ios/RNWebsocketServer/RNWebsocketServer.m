@@ -56,7 +56,6 @@ RCT_EXPORT_METHOD(stop)
 }
 - (void)serverDidStop:(PSWebSocketServer *)server {
     NSLog(@"Websocket serverDidStop");
-    [NSException raise:NSInternalInconsistencyException format:@"Server stopped unexpected."];
 }
 
 - (void)server:(PSWebSocketServer *)server webSocketDidOpen:(PSWebSocket *)webSocket {

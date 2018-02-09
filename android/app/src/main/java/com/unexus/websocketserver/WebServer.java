@@ -45,7 +45,7 @@ public class WebServer extends WebSocketServer {
             JSONObject jsonObject = new JSONObject(message);
 
             // Add origin (Who sent the message)
-            jsonObject.put("origin", conn.getRemoteSocketAddress().getHostName());
+            jsonObject.put("origin", conn.getRemoteSocketAddress().getAddress().getHostAddress());
 
             broadcast(jsonObject.toString());
         } catch (JSONException e) {
